@@ -94,6 +94,12 @@ auto timer=SystemTimer::Open();
 timer->Tick.Add(&Scheduler::OnSystemTimerTick);
 }
 
+VOID Scheduler::SuspendCurrentTask(UINT ms)
+{
+SpinLock lock(s_CriticalSection);
+s_WaitingTask=SuspendCurrentTask(s_WaitingTask, ms);
+}
+
 
 //================
 // Common Private

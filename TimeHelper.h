@@ -9,6 +9,7 @@
 // Using
 //=======
 
+#include "Concurrency/Scheduler.h"
 #include "Devices/Timers/SystemTimer.h"
 
 
@@ -28,10 +29,8 @@ return Devices::Timers::SystemTimer::Milliseconds64();
 
 inline VOID Sleep(UINT Milliseconds)
 {
-// TODO
-using SystemTimer=Devices::Timers::SystemTimer;
-UINT64 end=SystemTimer::Milliseconds64()+Milliseconds;
-while(SystemTimer::Milliseconds64()<=end);
+using Scheduler=Concurrency::Scheduler;
+Scheduler::SuspendCurrentTask(Milliseconds);
 }
 
 inline VOID SleepMicroseconds(UINT Microseconds)

@@ -39,6 +39,7 @@ public:
 	static VOID ExitTask();
 	static Handle<Task> GetCurrentTask();
 	static VOID Initialize();
+	static VOID SuspendCurrentTask(UINT MilliSeconds);
 
 private:
 	// Common
