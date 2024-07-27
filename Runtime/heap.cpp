@@ -8,8 +8,6 @@
 // Copyright 2024, Sven Bieg (svenbieg@web.de)
 // http://github.com/svenbieg/Heap
 
-#include "pch.h"
-
 
 //=======
 // Using
@@ -20,6 +18,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
+#include "pch.h"
 #include "Concurrency/TaskLock.h"
 #include "heap.h"
 
