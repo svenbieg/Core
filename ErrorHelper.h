@@ -5,6 +5,13 @@
 #pragma once
 
 
+//=======
+// Using
+//=======
+
+#include <assert.h>
+
+
 //========
 // Common
 //========
@@ -14,7 +21,6 @@
 
 #ifdef _DEBUG
 
-#define assert(Condition)if(!(Condition)){ DebugPrint("ASSERT in %s (%u): %s\n", __FILE__, __LINE__, #Condition); }
 VOID DebugPrint(Handle<String> Message);
 
 template <class... _args_t> inline VOID DebugPrint(LPCSTR Format, _args_t... Arguments)
@@ -25,7 +31,6 @@ DebugPrint(msg);
 
 #else
 
-#define assert(...)
 #define DebugPrint(...)
 
 #endif
