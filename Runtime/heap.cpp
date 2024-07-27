@@ -18,7 +18,6 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
-#include "pch.h"
 #include "Concurrency/TaskLock.h"
 #include "heap.h"
 
