@@ -46,6 +46,9 @@ if(m_Owner->GetFlag(TaskFlags::Sharing))
 	return;
 	}
 Scheduler::SuspendCurrentTask(m_Owner, 0);
+lock.Yield();
+m_Owner->m_Waiting=nullptr;
+m_Owner=task;
 }
 
 void SharedMutex::UnlockShared()
@@ -69,8 +72,6 @@ if(!waiting)
 	return;
 	}
 Scheduler::ResumeTask(waiting);
-m_Owner->m_Waiting=nullptr;
-m_Owner=waiting;
 }
 
 }

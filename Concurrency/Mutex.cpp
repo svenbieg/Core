@@ -40,6 +40,7 @@ if(!m_Owner)
 	return;
 	}
 Scheduler::SuspendCurrentTask(m_Owner, 0);
+lock.Yield();
 m_Owner->m_Waiting=nullptr;
 m_Owner=task;
 }
@@ -61,6 +62,7 @@ if(!m_Owner)
 	return;
 	}
 Scheduler::SuspendCurrentTask(m_Owner, 0);
+lock.Yield();
 m_Owner->m_Waiting=nullptr;
 m_Owner=task;
 }
