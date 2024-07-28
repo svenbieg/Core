@@ -142,6 +142,7 @@ if(!waiting)
 	m_Owner=nullptr;
 	return;
 	}
+Cpu::DataStoreBarrier();
 Scheduler::ResumeTask(waiting);
 }
 
