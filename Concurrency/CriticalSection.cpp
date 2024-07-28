@@ -76,6 +76,7 @@ if(m_Core!=core)
 if(--m_LockCount>0)
 	return;
 Cpu::StoreAndRelease(&m_Core, CPU_COUNT);
+Cpu::SetEvent();
 Interrupts::Enable();
 }
 
