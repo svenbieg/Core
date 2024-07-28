@@ -39,9 +39,11 @@ public:
 	// Common
 	VOID Lock();
 	VOID Lock(BOOL Exclusive);
+	VOID LockShared();
 	BOOL TryLock();
 	BOOL TryLock(BOOL Exclusive);
 	VOID Unlock();
+	VOID UnlockShared();
 
 protected:
 	// Common

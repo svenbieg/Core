@@ -9,7 +9,7 @@
 // Using
 //=======
 
-#include "SharedMutex.h"
+#include "Mutex.h"
 
 
 //===========
@@ -27,7 +27,7 @@ class SharedLock
 {
 public:
 	// Con-/Destructors
-	inline SharedLock(SharedMutex& Mutex): m_Mutex(&Mutex) {}
+	inline SharedLock(Mutex& Mutex): m_Mutex(&Mutex) {}
 	inline ~SharedLock()
 		{
 		if(m_Mutex)
@@ -41,7 +41,7 @@ public:
 
 private:
 	// Common
-	SharedMutex* m_Mutex;
+	Mutex* m_Mutex;
 };
 
 }

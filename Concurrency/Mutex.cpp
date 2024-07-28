@@ -67,6 +67,33 @@ m_Owner->m_Waiting=nullptr;
 m_Owner=task;
 }
 
+VOID Mutex::LockShared()
+{
+SpinLock lock(Scheduler::s_CriticalSection);
+UINT core=Cpu::GetId();
+auto task=Scheduler::s_CurrentTask[core];
+if(!task)
+	return;
+task->SetFlag(TaskFlags::Sharing);
+if(!m_Owner)
+	{
+	m_Owner=task;
+	return;
+	}
+auto waiting=m_Owner;
+while(waiting->m_Waiting)
+	waiting=waiting->m_Waiting;
+if(waiting->GetFlag(TaskFlags::Sharing))
+	{
+	Scheduler::AddParallelTask(waiting, task);
+	return;
+	}
+Scheduler::SuspendCurrentTask(waiting, 0);
+lock.Yield();
+m_Owner->m_Waiting=nullptr;
+m_Owner=task;
+}
+
 BOOL Mutex::TryLock()
 {
 SpinLock lock(Scheduler::s_CriticalSection);
@@ -103,6 +130,29 @@ if(m_Owner->GetFlag(TaskFlags::Exclusive))
 	{
 	Interrupts::Enable();
 	m_Owner->ClearFlag(TaskFlags::Exclusive);
+	}
+auto waiting=m_Owner->m_Waiting;
+if(!waiting)
+	{
+	m_Owner=nullptr;
+	return;
+	}
+Scheduler::ResumeTask(waiting);
+}
+
+VOID Mutex::UnlockShared()
+{
+SpinLock lock(Scheduler::s_CriticalSection);
+UINT core=Cpu::GetId();
+auto current=Scheduler::s_CurrentTask[core];
+if(!current)
+	return;
+current->ClearFlag(TaskFlags::Sharing);
+auto parallel=Scheduler::RemoveParallelTask(m_Owner, current);
+if(parallel)
+	{
+	m_Owner=parallel;
+	return;
 	}
 auto waiting=m_Owner->m_Waiting;
 if(!waiting)

@@ -11,7 +11,6 @@
 
 #include "Core/DispatchedHandler.h"
 #include "Devices/System/Cpu.h"
-#include "SharedMutex.h"
 #include "Signal.h"
 
 
@@ -28,7 +27,6 @@ namespace Concurrency {
 
 class Mutex;
 class Scheduler;
-class SharedMutex;
 class Signal;
 
 
@@ -55,7 +53,6 @@ public:
 	// Friends
 	friend Mutex;
 	friend Scheduler;
-	friend SharedMutex;
 	friend Signal;
 
 	// Common

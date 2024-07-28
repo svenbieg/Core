@@ -30,7 +30,6 @@ class Scheduler
 public:
 	// Friends
 	friend class Mutex;
-	friend class SharedMutex;
 	friend class Signal;
 
 	// Common
