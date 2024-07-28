@@ -86,9 +86,14 @@ while(waiting->m_Waiting)
 if(waiting->GetFlag(TaskFlags::Sharing))
 	{
 	Scheduler::AddParallelTask(waiting, task);
-	return;
+	if(waiting==m_Owner)
+		return;
+	Scheduler::SuspendCurrentTask(nullptr, 0);
 	}
-Scheduler::SuspendCurrentTask(waiting, 0);
+else
+	{
+	Scheduler::SuspendCurrentTask(waiting, 0);
+	}
 lock.Yield();
 m_Owner->m_Waiting=nullptr;
 m_Owner=task;
