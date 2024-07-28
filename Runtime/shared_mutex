@@ -24,7 +24,7 @@ namespace std {
 // Shared-Mutex
 //==============
 
-class shared_mutex: private Concurrency::SharedMutex
+class shared_mutex: private Concurrency::Mutex
 {
 public:
 	// Friends

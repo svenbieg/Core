@@ -27,8 +27,12 @@ class SpinLock
 {
 public:
 	// Con-/Destructors
-	inline SpinLock(CriticalSection& CriticalSection): m_CriticalSection(&CriticalSection) { Lock(); }
-	inline ~SpinLock() { m_CriticalSection->Leave(); }
+	inline SpinLock(CriticalSection& CriticalSection):
+		m_CriticalSection(&CriticalSection)
+		{
+		Lock();
+		}
+	inline ~SpinLock() { Unlock(); }
 
 	// Common
 	inline VOID Lock() { m_CriticalSection->Enter(); }

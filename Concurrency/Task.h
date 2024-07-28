@@ -71,7 +71,6 @@ public:
 		auto handler=new Core::Details::DispatchedFunction<Task>(this, [this, Function]() { Function(); });
 		DispatchedHandler::Append(m_Then, handler);
 		}
-	//inline TaskFlags GetFlags()const { return m_Flags; }
 	inline Status GetStatus()const { return m_Status; }
 	Status Wait();
 

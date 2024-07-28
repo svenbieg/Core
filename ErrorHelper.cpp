@@ -33,11 +33,7 @@ Handle<StringList> g_DebugStrings;
 
 [[noreturn]] VOID Abort()
 {
-//throw AbortException();
-while(1)
-	{
-	Cpu::WaitForInterrupt();
-	}
+throw AbortException();
 }
 
 [[noreturn]] VOID Abort(LPCSTR file, UINT line, LPCSTR func, LPCSTR expr)

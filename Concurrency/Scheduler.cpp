@@ -123,10 +123,10 @@ if(!s_WaitingTask)
 UINT64 time=GetTickCount64();
 if(s_WaitingTask->m_ResumeTime>time)
 	return nullptr;
-auto next=s_WaitingTask;
+auto waiting=s_WaitingTask;
 s_WaitingTask=s_WaitingTask->m_Next;
-next->m_Next=nullptr;
-return next;
+waiting->m_Next=nullptr;
+return waiting;
 }
 
 VOID Scheduler::HandleTaskSwitch(VOID* param)
@@ -176,11 +176,11 @@ for(UINT core=0; core<CPU_COUNT; core++)
 		current->m_Next=next;
 		Interrupts::Send(IRQ_TASK_SWITCH, s_CurrentCore);
 		next=GetWaitingTask();
-		if(!next)
-			break;
 		}
 	if(++s_CurrentCore==CPU_COUNT)
 		s_CurrentCore=0;
+	if(!next)
+		break;
 	}
 }
 
