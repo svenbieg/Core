@@ -43,24 +43,10 @@ extern "C" size_t fwrite(VOID const* buf, size_t size, size_t count, FILE* file)
 return 0;
 }
 
-/*int printf(LPCSTR format, ...)
-{
-va_list lst;
-va_start(lst, format);
-vfprintf(stdout, format, lst);
-va_end(lst);
-return 0;
-}*/
-
 extern "C" int sprintf(LPSTR str, LPCSTR format, ...)
 {
 return 0;
 }
-
-/*int vfprintf(FILE* file, LPCSTR format, va_list args)
-{
-return 0;
-}*/
 
 extern "C" size_t write(FILE* file, void const* buf, size_t size)
 {
@@ -72,12 +58,12 @@ return fwrite(buf, 1, size, file);
 // cstdlib
 //=========
 
+heap_handle_t g_heap=nullptr;
+
 extern "C" LPCSTR getenv(LPCSTR name)
 {
 return nullptr;
 }
-
-heap_handle_t g_heap=nullptr;
 
 extern "C" VOID* malloc(SIZE_T size)
 {
@@ -93,14 +79,6 @@ extern "C" VOID* realloc(VOID* buf, SIZE_T size)
 {
 return heap_realloc(g_heap, buf, size);
 }
-
-
-//========
-// cxxabi
-//========
-
-extern "C" void __cxa_atexit()
-{}
 
 
 //=========
@@ -209,6 +187,14 @@ UINT value=0;
 StringScanUInt(str, &value, base, len);
 return value;
 }
+
+
+//========
+// cxxabi
+//========
+
+extern "C" void __cxa_atexit()
+{}
 
 
 //========
