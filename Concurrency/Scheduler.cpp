@@ -165,22 +165,21 @@ Main();
 VOID Scheduler::OnSystemTimerTick()
 {
 SpinLock lock(s_CriticalSection);
-auto next=GetWaitingTask();
-if(!next)
+if(!s_WaitingTask)
 	return;
 for(UINT core=0; core<CPU_COUNT; core++)
 	{
 	auto current=s_CurrentTask[s_CurrentCore];
 	if(!current->m_Next)
 		{
+		auto next=GetWaitingTask();
+		if(!next)
+			break;
 		current->m_Next=next;
 		Interrupts::Send(IRQ_TASK_SWITCH, s_CurrentCore);
-		next=GetWaitingTask();
 		}
 	if(++s_CurrentCore==CPU_COUNT)
 		s_CurrentCore=0;
-	if(!next)
-		break;
 	}
 }
 
