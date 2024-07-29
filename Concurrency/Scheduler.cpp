@@ -80,6 +80,8 @@ return s_CurrentTask[core];
 
 VOID Scheduler::Initialize()
 {
+if(CPU_COUNT>0)
+	s_CurrentCore=1;
 for(UINT core=0; core<CPU_COUNT; core++)
 	{
 	Handle<Task> idle_task=new Concurrency::Details::TaskTyped(IdleTask);
@@ -176,7 +178,19 @@ for(UINT core=0; core<CPU_COUNT; core++)
 		if(!next)
 			break;
 		current->m_Next=next;
-		Interrupts::Send(IRQ_TASK_SWITCH, s_CurrentCore);
+		if(core==0)
+			{
+			auto exc_stack=GetExceptionStack(0);
+			current->m_StackPointer=SaveTaskContext(exc_stack->SP);
+			exc_stack->SP=RestoreTaskContext(next->m_StackPointer);
+			if(next->GetFlag(TaskFlags::Exclusive))
+				Interrupts::Disable();
+			s_CurrentTask[core]=next;
+			}
+		else
+			{
+			Interrupts::Send(IRQ_TASK_SWITCH, s_CurrentCore);
+			}
 		}
 	if(++s_CurrentCore==CPU_COUNT)
 		s_CurrentCore=0;
