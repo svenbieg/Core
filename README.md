@@ -16,4 +16,4 @@ There is a <b>CriticalSection</b> with a <b>SpinLock</b>, keeping other cores in
 The <b>Mutex</b> causes other tasks to be suspended, when held by a <b>ScopedLock</b> or a <b>SharedLock</b>.<br />
 Using a <b>TaskLock</b> pevents the current task from being interrupted.<br />
 And the <b>Signal</b> can be used to synchronize tasks. 
-</p>
+</p><br />
