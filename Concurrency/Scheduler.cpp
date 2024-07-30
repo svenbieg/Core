@@ -10,7 +10,6 @@
 //=======
 
 #include "Devices/System/Cpu.h"
-#include "Devices/System/Exceptions.h"
 #include "Devices/System/Interrupts.h"
 #include "Devices/System/System.h"
 #include "Devices/System/Tasks.h"
