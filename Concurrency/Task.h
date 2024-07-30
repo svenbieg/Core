@@ -11,6 +11,7 @@
 
 #include "Core/DispatchedHandler.h"
 #include "Devices/System/Cpu.h"
+#include "Devices/System/Tasks.h"
 #include "Signal.h"
 
 
@@ -51,6 +52,7 @@ class Task: public Object
 {
 public:
 	// Friends
+	friend Devices::System::Tasks;
 	friend Mutex;
 	friend Scheduler;
 	friend Signal;

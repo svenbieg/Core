@@ -135,19 +135,17 @@ VOID Scheduler::HandleTaskSwitch(VOID* param)
 {
 SpinLock lock(s_CriticalSection);
 UINT core=Cpu::GetId();
-auto exc_stack=GetExceptionStack(core);
 auto current=s_CurrentTask[core];
-current->m_StackPointer=SaveTaskContext(exc_stack->SP);
 auto next=current->m_Next;
 if(!current->GetFlag(TaskFlags::Suspend))
 	{
 	if(current!=s_IdleTask[core])
 		s_WaitingTask=SuspendTask(s_WaitingTask, current, 0);
 	}
-exc_stack->SP=RestoreTaskContext(next->m_StackPointer);
 if(next->GetFlag(TaskFlags::Exclusive))
 	Interrupts::Disable();
 s_CurrentTask[core]=next;
+Tasks::Switch(core, current, next);
 }
 
 VOID Scheduler::IdleTask()
@@ -180,12 +178,10 @@ for(UINT core=0; core<CPU_COUNT; core++)
 		current->m_Next=next;
 		if(core==0)
 			{
-			auto exc_stack=GetExceptionStack(0);
-			current->m_StackPointer=SaveTaskContext(exc_stack->SP);
-			exc_stack->SP=RestoreTaskContext(next->m_StackPointer);
 			if(next->GetFlag(TaskFlags::Exclusive))
 				Interrupts::Disable();
 			s_CurrentTask[core]=next;
+			Tasks::Switch(core, current, next);
 			}
 		else
 			{
