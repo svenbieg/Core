@@ -144,7 +144,7 @@ if(!current->GetFlag(TaskFlags::Suspend))
 if(next->GetFlag(TaskFlags::Exclusive))
 	Interrupts::Disable();
 s_CurrentTask[core]=next;
-Tasks::Switch(core, current, next);
+Cpu::SwitchTask(core, current, next);
 }
 
 VOID Scheduler::IdleTask()
@@ -180,7 +180,7 @@ for(UINT core=0; core<CPU_COUNT; core++)
 			if(next->GetFlag(TaskFlags::Exclusive))
 				Interrupts::Disable();
 			s_CurrentTask[core]=next;
-			Tasks::Switch(core, current, next);
+			Cpu::SwitchTask(core, current, next);
 			}
 		else
 			{
