@@ -2,7 +2,7 @@
 
 <p>
 This kernel provides basic functionality for multi-tasking C++ applications.<br />
-The scheduler is working without prioritization, while the
+The scheduler is working without any prioritization, while the
 <a href="https://github.com/svenbieg/Heap">memory-manager</a> supports constant low time allocation.<br />
 </p>
 <br />
