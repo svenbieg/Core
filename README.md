@@ -12,8 +12,8 @@ The scheduler is working without any prioritization, while the
 
 <p>
 I have implemented all synchronization-primitives that are important.<br />
-There is a <b>CriticalSection</b> with a <b>SpinLock</b>, keeping other cores in a loop while scheduling.<br />
-The <b>Mutex</b> causes other tasks to be suspended, when held by a <b>ScopedLock</b> or a <b>SharedLock</b>.<br />
-Using a <b>TaskLock</b> pevents the current task from being interrupted,<br />
-and the <b>Signal</b> can be used to synchronize tasks. 
+There is a CriticalSection with a SpinLock, keeping other cores in a loop while scheduling.<br />
+The Mutex causes other tasks to be suspended, when held by a ScopedLock or a SharedLock.<br />
+Using a TaskLock pevents the current task from being interrupted,<br />
+and the Signal can be used to synchronize tasks. 
 </p>
