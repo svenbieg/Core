@@ -7,7 +7,7 @@ The scheduler is working without any prioritization, while the
 </p>
 <br />
 
-<img src="https://github.com/user-attachments/assets/29574baf-2d57-4823-9250-eae0ad98e12e" /><br />
+<img src="https://github.com/user-attachments/assets/f84df337-1286-4430-8802-6bf00762b25b" /><br />
 <br />
 
 <p>
