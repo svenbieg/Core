@@ -2,7 +2,7 @@
 
 <p>
 This kernel provides basic functionality for multi-tasking C++ applications.<br />
-The scheduler is working with <a href="https://github.com/svenbieg/Core/wiki/Dynamic-Prioritization">dynamic prioritization</a>,
+The <a href="https://github.com/svenbieg/Core/wiki/Scheduler">scheduler</a> is working with dynamic prioritization,
 while the <a href="https://github.com/svenbieg/Heap">memory-manager</a><br />
 supports constant low time allocation.<br />
 </p>
