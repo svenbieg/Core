@@ -11,6 +11,11 @@ supports constant low time allocation.<br />
 <img src="https://github.com/user-attachments/assets/a62770eb-6f1a-4035-a30c-d2c6846475e8" /><br />
 <br />
 
+<p>
+You can find a Blink-example for Raspberry Pi 5 <a href="https://github.com/svenbieg/Blink">here</a>.
+</p>
+<br />
+
 <h2>Synchronization Primitives</h2>
 
 <table>
@@ -25,7 +30,3 @@ supports constant low time allocation.<br />
     <td>Used to synchronize tasks</td>
   </tr>
 </table><br />
-
-<p>
-You can find a Blink-example for Raspberry Pi 5 <a href="https://github.com/svenbieg/Blink">here</a>.
-</p>
