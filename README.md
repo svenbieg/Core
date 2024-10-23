@@ -1,7 +1,7 @@
 <h1>Core</h1>
 
 <p>
-This kernel provides basic functionality for multi-tasking C++ applications.<br />
+This platform provides basic functionality for multi-tasking C++ applications.<br />
 The <a href="https://github.com/svenbieg/Core/wiki/Scheduler">scheduler</a> is working with dynamic prioritization,
 while the <a href="https://github.com/svenbieg/Heap">memory-manager</a><br />
 supports constant low time allocation.<br />
