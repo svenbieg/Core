@@ -81,12 +81,12 @@ Interrupts::Route(IRQ_TASK_SWITCH, IrqTarget::All);
 Interrupts::SetHandler(IRQ_TASK_SWITCH, HandleTaskSwitch);
 for(UINT core=0; core<CPU_COUNT; core++)
 	{
-	Handle<Task> idle=new Concurrency::Details::TaskTyped(IdleTask);
+	Handle<Task> idle=new Concurrency::Details::TaskProcedure(IdleTask);
 	InitializeTask(&idle->m_StackPointer, &Task::TaskProc, idle);
 	s_IdleTask[core]=idle;
 	s_CurrentTask[core]=idle;
 	}
-Handle<Task> main=new Concurrency::Details::TaskTyped(MainTask);
+Handle<Task> main=new Concurrency::Details::TaskProcedure(MainTask);
 InitializeTask(&main->m_StackPointer, &Task::TaskProc, main);
 s_CurrentTask[0]=main;
 }
@@ -144,6 +144,7 @@ auto current_ptr=&first;
 while(*current_ptr)
 	{
 	auto current=*current_ptr;
+	assert(current!=suspend);
 	if(current->m_ResumeTime>suspend->m_ResumeTime)
 		{
 		suspend->m_Waiting=current;
@@ -273,7 +274,7 @@ for(UINT u=0; u<s_CoreCount; u++)
 		break;
 	UINT core=CurrentCore();
 	auto current=s_CurrentTask[core];
-	if(GetFlag(current->m_Flags, TaskFlags::Busy))
+	if(current->GetFlag(TaskFlags::Busy))
 		continue;
 	auto parallel=resume->m_Parallel;
 	resume->m_Parallel=nullptr;

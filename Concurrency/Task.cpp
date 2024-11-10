@@ -40,6 +40,7 @@ return m_Status;
 //============================
 
 Task::Task():
+Cancelled(false),
 m_Status(Status::Pending),
 // Private
 m_Flags(TaskFlags::None),
@@ -60,7 +61,7 @@ try
 	{
 	task->Run();
 	}
-catch(Exception e)
+catch(Exception& e)
 	{
 	status=e.GetStatus();
 	}
