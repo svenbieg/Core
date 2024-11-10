@@ -60,7 +60,7 @@ public:
 	friend Signal;
 
 	// Common
-	inline VOID Cancel() { Cancelled=true; }
+	VOID Cancel();
 	volatile BOOL Cancelled;
 	inline VOID Then(VOID (*Procedure)())
 		{

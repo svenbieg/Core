@@ -27,9 +27,18 @@ namespace Concurrency {
 // Common
 //========
 
+VOID Task::Cancel()
+{
+ScopedLock lock(m_Mutex);
+m_Then=nullptr;
+Cancelled=true;
+}
+
 Status Task::Wait()
 {
 ScopedLock lock(m_Mutex);
+if(m_Status!=Status::Pending)
+	return m_Status;
 m_Done.Wait(lock);
 return m_Status;
 }
@@ -65,13 +74,16 @@ catch(Exception& e)
 	{
 	status=e.GetStatus();
 	}
+ScopedLock lock(task->m_Mutex);
 task->m_Status=status;
 task->m_Done.Trigger();
 if(task->m_Then)
 	{
 	if(Application::Current)
 		Application::Current->DispatchHandler(task->m_Then);
+	task->m_Then=nullptr;
 	}
+lock.Unlock();
 Scheduler::ExitTask();
 }
 
