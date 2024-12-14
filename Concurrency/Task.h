@@ -64,23 +64,23 @@ public:
 	volatile BOOL Cancelled;
 	inline VOID Then(VOID (*Procedure)())
 		{
-		auto handler=new DispatchedProcedure(Procedure);
-		DispatchedQueue::Append(&m_Then, handler);
+		assert(m_Then==nullptr);
+		m_Then=new DispatchedProcedure(Procedure);
 		}
 	template <class _owner_t> inline VOID Then(_owner_t* Owner, VOID (_owner_t::*Procedure)())
 		{
-		auto handler=new DispatchedMemberProcedure<_owner_t>(Owner, Procedure);
-		DispatchedQueue::Append(&m_Then, handler);
+		assert(m_Then==nullptr);
+		m_Then=new DispatchedMemberProcedure<_owner_t>(Owner, Procedure);
 		}
 	template <class _owner_t, class... _args_t> inline VOID Then(Handle<_owner_t> Owner, VOID (_owner_t::*Procedure)())
 		{
-		auto handler=new DispatchedMemberProcedure<_owner_t>(Owner, Procedure);
-		DispatchedQueue::Append(&m_Then, handler);
+		assert(m_Then==nullptr);
+		m_Then=new DispatchedMemberProcedure<_owner_t>(Owner, Procedure);
 		}
 	template <class _owner_t, class _lambda_t> inline VOID Then(_owner_t* Owner, _lambda_t&& Lambda)
 		{
-		auto handler=new DispatchedLambda(Owner, std::forward<_lambda_t>(Lambda));
-		DispatchedQueue::Append(&m_Then, handler);
+		assert(m_Then==nullptr);
+		m_Then=new DispatchedLambda(Owner, std::forward<_lambda_t>(Lambda));
 		}
 	inline Status GetStatus()const { return m_Status; }
 	Status Wait();
