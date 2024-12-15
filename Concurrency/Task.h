@@ -11,7 +11,6 @@
 
 #include "Concurrency/DispatchedQueue.h"
 #include "Devices/System/Cpu.h"
-#include "Signal.h"
 
 
 //===========
@@ -62,6 +61,7 @@ public:
 	// Common
 	VOID Cancel();
 	volatile BOOL Cancelled;
+	static Handle<Task> Get();
 	inline VOID Then(VOID (*Procedure)())
 		{
 		assert(m_Then==nullptr);
@@ -83,6 +83,8 @@ public:
 		m_Then=new DispatchedLambda(Owner, std::forward<_lambda_t>(Lambda));
 		}
 	inline Status GetStatus()const { return m_Status; }
+	static VOID Sleep(UINT Milliseconds);
+	static VOID SleepMicroseconds(UINT Microseconds);
 	Status Wait();
 
 protected:
@@ -118,7 +120,6 @@ private:
 // Procedure
 //===========
 
-namespace Details {
 class TaskProcedure: public Task
 {
 public:
@@ -134,14 +135,13 @@ private:
 	// Common
 	VOID Run()override { m_Procedure(); }
 	_proc_t m_Procedure;
-};}
+};
 
 
 //==================
 // Member-Procedure
 //==================
 
-namespace Details {
 template <class _owner_t> class TaskMemberProcedure: public Task
 {
 public:
@@ -159,14 +159,13 @@ private:
 	VOID Run()override { (m_Owner->*m_Procedure)(); }
 	Handle<_owner_t> m_Owner;
 	_proc_t m_Procedure;
-};}
+};
 
 
 //=============
 // Task-Lambda
 //=============
 
-namespace Details {
 template <class _owner_t, class _lambda_t> class TaskLambda: public Task
 {
 public:
@@ -181,6 +180,6 @@ private:
 	VOID Run()override { m_Lambda(); }
 	_lambda_t m_Lambda;
 	Handle<_owner_t> m_Owner;
-};}
+};
 
 }
