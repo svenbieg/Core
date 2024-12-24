@@ -19,13 +19,6 @@
 namespace std {
 
 
-//======================
-// Forward-Declarations
-//======================
-
-class condition_variable;
-
-
 //=======
 // Mutex
 //=======
@@ -53,9 +46,6 @@ public:
 template <class _mutex_t> class unique_lock: private Concurrency::ScopedLock
 {
 public:
-	// Friends
-	friend condition_variable;
-
 	// Con-/Destructors
 	inline unique_lock(_mutex_t& mutex): ScopedLock(mutex) {}
 

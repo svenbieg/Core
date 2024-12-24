@@ -9,6 +9,7 @@
 // Using
 //=======
 
+#include <assert.h>
 #include "Concurrency/DispatchedQueue.h"
 #include "Devices/System/Cpu.h"
 
